@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using System.Xml.Linq;
+using static HealthCareSystem_OOP.Program;
 
 namespace HealthCareSystem_OOP
 {
@@ -76,6 +78,52 @@ namespace HealthCareSystem_OOP
 
         }
 
+        public static void PrintPatientInformation(Patient p)
+        {
+            p.PrintInformation();
+            //  patients[0].PrintInformation();
+        }
+
+        public static void AdmittPatient()
+        {
+
+
+            Console.WriteLine("enter patient Name:");
+            string AdmittedName = Console.ReadLine();
+            Patient AdmittedResult = SearchPatient(AdmittedName);
+
+            if (AdmittedResult == null)
+            {
+                Console.WriteLine("patient not found");
+            }
+            else
+            {
+                Console.WriteLine("Enter doctor name:");
+                string dname = Console.ReadLine();
+
+                AdmittedResult.Admit(dname);
+
+            }
+
+
+
+
+        }
+
+        public static Patient SearchPatient(string name)
+        {
+
+            for (int i = 0; i < patients.Count(); i++)
+            {
+                if (patients[i].Name == name)
+                {
+                    return patients[i];
+                }
+
+            }
+
+            return null;
+        }
 
         static void Main(string[] args)
         {
@@ -97,7 +145,7 @@ namespace HealthCareSystem_OOP
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Invalid input. Please choose a number from 1 to 10.");
+                    Console.WriteLine("Invalid input. Please choose a number from 1 to 12.");
                 }
 
                 switch (choice)
@@ -109,7 +157,7 @@ namespace HealthCareSystem_OOP
 
                     case 2:
 
-
+                        AdmittPatient();
 
 
                         break;
@@ -123,6 +171,22 @@ namespace HealthCareSystem_OOP
 
 
                     case 4:
+
+                        Console.WriteLine("enter patient Name:");
+                        string searchName = Console.ReadLine();
+                        Patient searchResult = SearchPatient(searchName);
+
+                        if (searchResult == null)
+                        {
+                            Console.WriteLine("patient not found");
+                        }
+                        else
+                        {
+                            PrintPatientInformation(searchResult);
+
+
+                        }
+
                         break;
 
 
@@ -243,6 +307,28 @@ namespace HealthCareSystem_OOP
                 patientCount++;
 
                 Console.WriteLine("Patient registered successfully with Patient ID: " + ID);
+            }
+
+            public void PrintInformation()
+            {
+
+                Console.WriteLine("Name :" + Name);
+
+                Console.WriteLine("Id :" + ID);
+
+                Console.WriteLine("diagnose :" + Diagnosis);
+
+                Console.WriteLine("department :" + Department);
+
+                Console.WriteLine("assigned Doctor :" +assignedDoctor);
+
+
+            }
+
+            public void Admit(string dname)
+            {
+                Admitted = true;
+                assignedDoctor = dname;
             }
 
         }
