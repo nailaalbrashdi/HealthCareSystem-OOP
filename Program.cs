@@ -104,6 +104,7 @@ namespace HealthCareSystem_OOP
                 {
                     case 1:
                         RegisterPatient();
+                        
                         break;
 
                     case 2:
